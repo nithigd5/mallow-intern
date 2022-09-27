@@ -20,7 +20,7 @@
 <body>
 <div class="container">
     <h2 class="title">Register Form</h2>
-    <form action="" id="register-form" class="form" method="get">
+    <form action="" id="register-form" class="form" method="get" novalidate>
         <div class="form-field">
             <label class="input-title" for="name">Name</label>
             <input type="text" name="name" id="name" placeholder="Name" class="form-input" Minlength="3" Maxlength="100" required>
@@ -41,7 +41,7 @@
         </fieldset>
         <div class="form-field">
             <label class="input-title" for="address">Address</label>
-            <textarea type="email" name="email" id="address" placeholder="Address" class="form-input"
+            <textarea Minlength="10" name="address" id="address" placeholder="Address" class="form-input"
                       rows="4" required></textarea>
             <label class="error"></label>
         </div>

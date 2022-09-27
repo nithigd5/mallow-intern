@@ -20,7 +20,7 @@ let surveyFormRules = {
     address: {
         required: true,
         minLength: 20,
-        maxLength:200
+        maxLength: 200
     },
     dob: {
         required: true,
@@ -34,7 +34,7 @@ let surveyFormRules = {
         maxLength: 100,
         dataType: "number"
     },
-    mark2:{
+    mark2: {
         required: true,
         minLength: 0,
         maxLength: 100,
@@ -87,27 +87,38 @@ let surveyFormMessages = {
 }
 
 $(document).ready(function () {
+    $("#register-form").on('submit', function (e) {
+        e.preventDefault();
+        var form = $(this);
 
-    let form = $('#register-form').parsley();
-    console.log(form.isValid())
+        console.log("Submit triggered")
+        form.parsley().validate();
+
+        if (form.parsley().isValid()) {
+            if (confirm('Do you want to submit the form')) {
+                alert("success");
+            }
+        }
+    });
 
     // addValidator($(".register-form"), surveyFormRules, surveyFormMessages, {
     //     errorMsg: ".error", showBorderInput: true,
     //     showFieldBorder: true, showConfirm: true
     // });
-    $("#profile").change(function (){
+    $("#profile").change(function () {
         previewFile(this, "#profile-preview");
         console.log("File changed");
     });
+
 });
 
-function previewFile(image, destination){
+function previewFile(image, destination) {
     const file = $(image).get(0).files[0];
 
-    if(file){
+    if (file) {
         const reader = new FileReader();
 
-        reader.onload = function(){
+        reader.onload = function () {
             $(destination).attr("src", reader.result);
         }
 
