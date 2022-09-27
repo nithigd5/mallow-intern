@@ -30,7 +30,7 @@
         <fieldset class="form-group">
             <div class="form-field">
                 <label class="input-title" for="mobile">Mobile</label>
-                <input type="tel" name="mobile" pattern=/[6-9][0-9]{9}/ placeholder="Mobile" data-parsley-type="digits"	 class="form-input" id="mobile" required>
+                <input type="tel" name="mobile" pattern="^((\+91)?|91)?[6789][0-9]{9}" placeholder="Mobile" data-parsley-type="digits"	 class="form-input" id="mobile" required>
                 <label class="error"></label>
             </div>
             <div class="form-field">
@@ -99,8 +99,18 @@
                 </div>
             </fieldset>
         </fieldset>
-        <input type="submit" class="sbtn" value="submit">
+        <input type="button" id="submit-form" class="sbtn" value="submit">
     </form>
+</div>
+
+<div id="confirm" class="modal">
+    <div class="modal-content">
+        <span id="close" class="close">&times;</span>
+        <p>Do you want to submit the form?</p>
+        <button class="sbtn" id="ok" type="button">Yes</button>
+        <button class="sbtn" id="no" type="button">No</button>
+    </div>
+
 </div>
 
 </body>
