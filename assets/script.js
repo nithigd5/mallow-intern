@@ -87,20 +87,19 @@ let surveyFormMessages = {
 }
 
 $(document).ready(function () {
-    $("#register-form").on('submit', function (e) {
-        e.preventDefault();
-        var form = $(this);
-
-        console.log("Submit triggered")
-        form.parsley().validate();
-
-        if (form.parsley().isValid()) {
-            if (confirm('Do you want to submit the form')) {
-                alert("success");
-            }
-        }
+    $(function () {
+        $('#register-form').parsley().on('field:validated', function () {
+        })
+            .on('form:submit', function () {
+                if (confirm('Do you want to submit the form')) {
+                    $("#register-form").reset();
+                    alert("success");
+                    return true;
+                }else{
+                    return false;
+                }
+            });
     });
-
     // addValidator($(".register-form"), surveyFormRules, surveyFormMessages, {
     //     errorMsg: ".error", showBorderInput: true,
     //     showFieldBorder: true, showConfirm: true
