@@ -15,7 +15,7 @@ let surveyFormRules = {
         minLength: 5,
         maxLength: 50,
         required: true,
-        pattern: /[a-zA-Z]+[0-9]*@[a-zA-Z]+[0-9]*.[a-zA-Z]{2,5}/
+        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     },
     address: {
         required: true,
@@ -68,7 +68,7 @@ let surveyFormMessages = {
     },
     email: {
         message: "Required Valid Email Address",
-        missing: "Please provide for future contacts and offers."
+        missing: "Please provide it."
     },
     phone: {
         message: "Please Enteer a valid Phone Number",
