@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="assets/script.js"></script>
+    <script src="assets/validator.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&family=Open+Sans&family=Roboto&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2 class="title">Register Form</h2>
+    <form action="" class="survey-form" method="get" novalidate>
+        <div class="form-field">
+            <label class="input-title" for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Name" class="form-input">
+            <label class="error"></label>
+        </div>
+
+        <fieldset class="form-group">
+            <div class="form-field">
+                <label class="input-title" for="mobile">Mobile</label>
+                <input type="tel" name="mobile" placeholder="Mobile" class="form-input" id="mobile">
+                <label class="error"></label>
+            </div>
+            <div class="form-field">
+                <label class="input-title" for="dob">Date Of Birth</label>
+                <input type="date" name="dob" id="dob" class="form-input">
+                <label class="error"></label>
+            </div>
+        </fieldset>
+        <div class="form-field">
+            <label class="input-title" for="address">Address</label>
+            <textarea type="email" name="email" id="address" placeholder="Address" class="form-input"
+                      rows="4"></textarea>
+            <label class="error"></label>
+        </div>
+        <div class="form-field">
+            <label class="input-title" for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Email" class="form-input">
+            <label class="error"></label>
+        </div>
+        <fieldset class="form-group">
+            <div class="form-field form-image">
+                <label class="input-title" for="profile">
+                <img src="assets/character_icons_4.png" alt="Your Profile Picture here" class="img" id="profile-preview">
+                </label>
+                <input type="file" accept="image/*" name="profile" id="profile" class="form-input">
+                <label class="error"></label>
+            </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+            <h3 class="form-section-h">Please Enter your marks:</h3>
+            <fieldset class="form-group">
+                <div class="form-field">
+                    <label class="input-title" for="mark1">Mark in Subject 1</label>
+                    <input type="number" min="0" max="100" name="mark1" placeholder="Subject 1 Mark" class="form-input"
+                           id="mark1">
+                    <label class="error"></label>
+                </div>
+                <div class="form-field">
+                    <label class="input-title" for="mark2">Mark in Subject 2</label>
+                    <input type="number" min="0" max="100" name="mark2" placeholder="Subject 2 Mark" class="form-input"
+                           id="mark2">
+                    <label class="error"></label>
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <div class="form-field">
+                    <label class="input-title" for="mark3">Mark in Subject 3</label>
+                    <input type="number" min="0" max="100" name="mark3" placeholder="Subject 3 Mark" class="form-input"
+                           id="mark3">
+                    <label class="error"></label>
+                </div>
+                <div class="form-field">
+                    <label class="input-title" for="mark4">Mark in Subject 4</label>
+                    <input type="number" min="0" max="100" name="mark4" placeholder="Subject 4 Mark" class="form-input"
+                           id="mark4">
+                    <label class="error"></label>
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <div class="form-field">
+                    <label class="input-title" for="mark5">Mark in Subject 5</label>
+                    <input type="number" min="0" max="100" name="mark5" placeholder="Subject 5 Mark" class="form-input"
+                           id="mark5">
+                    <label class="error"></label>
+                </div>
+            </fieldset>
+        </fieldset>
+
+        <input type="submit" class="btn" value="submit">
+
+    </form>
+</div>
+</body>
+</html>
