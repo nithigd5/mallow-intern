@@ -87,14 +87,18 @@ let surveyFormMessages = {
 }
 
 $(document).ready(function () {
-    addValidator($(".survey-form"), surveyFormRules, surveyFormMessages, {
-        errorMsg: ".error", showBorderInput: true,
-        showFieldBorder: true, showConfirm: true
-    });
+
+    let form = $('#register-form').parsley();
+    console.log(form.isValid())
+
+    // addValidator($(".register-form"), surveyFormRules, surveyFormMessages, {
+    //     errorMsg: ".error", showBorderInput: true,
+    //     showFieldBorder: true, showConfirm: true
+    // });
     $("#profile").change(function (){
         previewFile(this, "#profile-preview");
         console.log("File changed");
-    })
+    });
 });
 
 function previewFile(image, destination){

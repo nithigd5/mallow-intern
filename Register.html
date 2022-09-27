@@ -14,38 +14,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&family=Open+Sans&family=Roboto&display=swap"
           rel="stylesheet">
+    <script src="/assets/parsley.min.js"></script>
+
 </head>
 <body>
 <div class="container">
     <h2 class="title">Register Form</h2>
-    <form action="" class="survey-form" method="get" novalidate>
+    <form action="" id="register-form" class="form" method="get">
         <div class="form-field">
             <label class="input-title" for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Name" class="form-input">
+            <input type="text" name="name" id="name" placeholder="Name" class="form-input" Minlength="3" Maxlength="100" required>
             <label class="error"></label>
         </div>
 
         <fieldset class="form-group">
             <div class="form-field">
                 <label class="input-title" for="mobile">Mobile</label>
-                <input type="tel" name="mobile" placeholder="Mobile" class="form-input" id="mobile">
+                <input type="tel" name="mobile" pattern=/[6-9][0-9]{9}/ placeholder="Mobile" data-parsley-type="digits"	 class="form-input" id="mobile" required>
                 <label class="error"></label>
             </div>
             <div class="form-field">
                 <label class="input-title" for="dob">Date Of Birth</label>
-                <input type="date" name="dob" id="dob" class="form-input">
+                <input type="date" name="dob" id="dob" class="form-input" required>
                 <label class="error"></label>
             </div>
         </fieldset>
         <div class="form-field">
             <label class="input-title" for="address">Address</label>
             <textarea type="email" name="email" id="address" placeholder="Address" class="form-input"
-                      rows="4"></textarea>
+                      rows="4" required></textarea>
             <label class="error"></label>
         </div>
         <div class="form-field">
-            <label class="input-title" for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email" class="form-input">
+            <label class="input-title" for="email" >Email</label>
+            <input type="email" name="email" id="email" placeholder="Email" class="form-input" required>
             <label class="error"></label>
         </div>
         <fieldset class="form-group">
@@ -53,7 +55,7 @@
                 <label class="input-title" for="profile">
                 <img src="assets/character_icons_4.png" alt="Your Profile Picture here" class="img" id="profile-preview">
                 </label>
-                <input type="file" accept="image/*" name="profile" id="profile" class="form-input">
+                <input type="file" accept="image/*" name="profile" id="profile" class="form-input" required>
                 <label class="error"></label>
             </div>
         </fieldset>
@@ -64,13 +66,13 @@
                 <div class="form-field">
                     <label class="input-title" for="mark1">Mark in Subject 1</label>
                     <input type="number" min="0" max="100" name="mark1" placeholder="Subject 1 Mark" class="form-input"
-                           id="mark1">
+                           id="mark1" data-parsley-type="number"  required>
                     <label class="error"></label>
                 </div>
                 <div class="form-field">
                     <label class="input-title" for="mark2">Mark in Subject 2</label>
                     <input type="number" min="0" max="100" name="mark2" placeholder="Subject 2 Mark" class="form-input"
-                           id="mark2">
+                           id="mark2" data-parsley-type="number"	 required>
                     <label class="error"></label>
                 </div>
             </fieldset>
@@ -78,13 +80,13 @@
                 <div class="form-field">
                     <label class="input-title" for="mark3">Mark in Subject 3</label>
                     <input type="number" min="0" max="100" name="mark3" placeholder="Subject 3 Mark" class="form-input"
-                           id="mark3">
+                           id="mark3" data-parsley-type="number"	 required>
                     <label class="error"></label>
                 </div>
                 <div class="form-field">
                     <label class="input-title" for="mark4">Mark in Subject 4</label>
                     <input type="number" min="0" max="100" name="mark4" placeholder="Subject 4 Mark" class="form-input"
-                           id="mark4">
+                           id="mark4" data-parsley-type="number"	 required>
                     <label class="error"></label>
                 </div>
             </fieldset>
@@ -92,15 +94,14 @@
                 <div class="form-field">
                     <label class="input-title" for="mark5">Mark in Subject 5</label>
                     <input type="number" min="0" max="100" name="mark5" placeholder="Subject 5 Mark" class="form-input"
-                           id="mark5">
+                           id="mark5" data-parsley-type="number"	 required>
                     <label class="error"></label>
                 </div>
             </fieldset>
         </fieldset>
-
-        <input type="submit" class="btn" value="submit">
-
+        <input type="submit" class="sbtn" value="submit">
     </form>
 </div>
+
 </body>
 </html>
