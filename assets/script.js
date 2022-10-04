@@ -1,20 +1,15 @@
-
 $(document).ready(function () {
-    let form  = $('#register-form').parsley();
+    //Comment this to see php validation
+    let form = $('#register-form').parsley();
 
-    $("#submit-form").on("click",function (){
+    $("#submit-form").on("click", function () {
+        // $('#register-form').submit();
+
         form.validate();
-        if(form.isValid()){
+        if (form.isValid()) {
             $("#confirm")[0].style.display = "block";
         }
-    })
-
-    // $(function () {
-    //     form.on('field:validated', function () {
-    //     })
-    //         .on('form:success', function () {
-    //         });
-    // });
+    });
 
     $("#profile").change(function () {
         previewFile(this, "#profile-preview");
@@ -35,8 +30,6 @@ $(document).ready(function () {
     $("#no").on("click", () => {
         $("#confirm")[0].style.display = "none";
     })
-
-
 });
 
 function previewFile(image, destination) {
