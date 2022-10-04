@@ -25,7 +25,7 @@ function getValue($name)
 {
     global $form;
     if (!isset($form)) return "";
-    if (empty($form->formData[$name]) && $form->formData[$name] != 0) return "";
+    if (empty($form->formData[$name])) return "";
     return $form->formData[$name];
 }
 
