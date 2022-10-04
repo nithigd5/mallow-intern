@@ -21,19 +21,19 @@ require_once "utilities.php";
 <body>
 <div class="jumbotron text-center">
     <h1>Students Data and Uploaded Profile Image</h1>
-    <p1>Students details are displayed here and Images also displayed here</p1>
-    <h5>Total Marks Scored:
+    <p1 class="lead">Students details are displayed here and Images also displayed here</p1>
+    <h4 class="text-success">Total Marks Scored:
         <?php $total = $form->formData["mark1"] + $form->formData["mark2"] + $form->formData["mark3"]
             + $form->formData["mark4"] + $form->formData["mark5"];
             echo $total;
-        ?> out of 500</h5>
-    <h5>Percentage Scored:
-        <?php echo $total/500 * 100; ?>%</h5>
+        ?> out of 500</h4>
+    <h4 class="text-success">Percentage Scored:
+        <?php echo $total/500 * 100; ?>%</h4>
 </div>
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-lg-6">
             <table class="table table-striped h-100 table-hover table-dark">
                 <thead>
                 <tr class="table-primary">
@@ -55,8 +55,8 @@ require_once "utilities.php";
                 </tbody>
             </table>
         </div>
-        <div class="col">
-            <img class="img-fluid rounded" src="<?= fileToUrl($form->formData['profile'] ?: ""); ?>"/>
+        <div class="col-lg-6">
+            <img class="img-fluid rounded h-50" src="<?= fileToUrl($form->formData['profile'] ?: ""); ?>"/>
         </div>
     </div>
 </div>
