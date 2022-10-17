@@ -1,35 +1,7 @@
 <?php
 
 require_once "utilities.php";
-
-/**
- * Data Class for Validation Rules
- *
- */
-class ValidationRule
-{
-    public string $name;
-    public string $type;
-    public ?int $min = null;
-    public ?int $max = null;
-    public ?string $pattern = null;
-    public ?array $inList = null;
-    public ?bool $isRequired = true;
-
-    public function __construct(string $name, string $type, ?int $min = null, ?int $max = null,
-                                string $pattern = null, array $inList = null, bool $isRequired = true)
-    {
-        $this->name = $name;
-        $this->min = $min;
-        $this->max = $max;
-        $this->type = $type;
-        $this->pattern = $pattern;
-        $this->inList = $inList;
-        $this->isRequired = $isRequired;
-    }
-
-}
-
+require_once "ValidationRule.php";
 
 /**
  * Sanitizes the form input data and Validates a Form Data by given constraints.
@@ -49,7 +21,7 @@ class FormValidator
      */
     private array $rules;
 
-    public function __construct(public array $formData, public array $files)
+    public function __construct(public array $formData , public array $files)
     {
     }
 
@@ -62,53 +34,60 @@ class FormValidator
     public function getFilter($type): int
     {
         return match ($type) {
-            "bool" => FILTER_VALIDATE_BOOLEAN,
-            "domain" => FILTER_VALIDATE_DOMAIN,
-            "email" => FILTER_VALIDATE_EMAIL,
-            "float" => FILTER_VALIDATE_FLOAT,
-            "int" => FILTER_VALIDATE_INT,
-            "ip" => FILTER_VALIDATE_IP,
-            default => FILTER_UNSAFE_RAW,
+            "bool" => FILTER_VALIDATE_BOOLEAN ,
+            "domain" => FILTER_VALIDATE_DOMAIN ,
+            "email" => FILTER_VALIDATE_EMAIL ,
+            "float" => FILTER_VALIDATE_FLOAT ,
+            "int" => FILTER_VALIDATE_INT ,
+            "ip" => FILTER_VALIDATE_IP ,
+            default => FILTER_UNSAFE_RAW ,
         };
     }
 
-    function validateNumberRange(ValidationRule $rule, $data): bool
+    function validateNumberRange(ValidationRule $rule , $data): bool
     {
         return $data >= $rule->min && $data <= $rule->max;
     }
 
-    function validateStringLength(ValidationRule $rule, $data): bool
+    function validateStringLength(ValidationRule $rule , $data): bool
     {
         $l = strlen($data);
         return $l >= $rule->min && $l <= $rule->max;
     }
 
-    function validateLength(ValidationRule $rule, $data): bool
+    function validateLength(ValidationRule $rule , $data): bool
     {
-        if (!isset($rule->min) || !isset($rule->max))
+        if (!$rule->min || !$rule->max)
             return true;
 
         if ($rule->type === "int" || $rule->type === "float") {
-            return $this->validateNumberRange($rule, $data);
+            return $this->validateNumberRange($rule , $data);
         }
 
-        return $this->validateStringLength($rule, $data);
+        return $this->validateStringLength($rule , $data);
     }
 
-    function validateDate(ValidationRule $rule, $data): bool
+    function validateDate(ValidationRule $rule , $data): DateTime|bool
     {
-        if (empty($rule->pattern)) $rule->pattern = '/([1-2][0-9]{3})-([0-9]{2})-([0-9]{2})/';
-        if (!preg_match($rule->pattern, $data, $match)) return false;
-        return checkdate($match[2], $match[3], $match[1]);
+        if (empty($rule->pattern)) $rule->pattern = 'Y-m-d';
+
+        $date = DateTime::createFromFormat($rule->pattern , $data);
+        if (!$date) {
+            return false;
+        } else {
+            return $date;
+        }
+//        if (!preg_match($rule->pattern, $data, $match)) return false;
+//        return checkdate($match[2], $match[3], $match[1]);
     }
 
-    function validatePattern(ValidationRule $rule, $data): bool
+    function validatePattern(ValidationRule $rule , $data): bool
     {
         if (!$rule->pattern) return true;
-        return preg_match(preg_quote($rule->pattern), $data);
+        return preg_match(preg_quote($rule->pattern) , $data);
     }
 
-    function setError(string $type, string $name, bool $clear = false, ValidationRule $rule = null): void
+    function setError(string $type , string $name , bool $clear = false , ValidationRule $rule = null): void
     {
         switch ($type) {
             case "required" :
@@ -125,7 +104,7 @@ class FormValidator
             }
             case "length" :
             {
-                $this->errors[$name] = sprintf($this->length_error, $rule->min, $rule->max);
+                $this->errors[$name] = sprintf($this->length_error , $rule->min , $rule->max);
                 $this->setInvalid();
                 break;
             }
@@ -141,16 +120,16 @@ class FormValidator
             $name = $rule->name;
 
             if ($rule->type == 'file') {
-                $e = $this->validateFile($name, $rule);
+                $e = $this->validateFile($name , $rule);
                 if ($e !== UPLOAD_ERR_OK) {
-                    $this->setFileError($e, $name, $rule->max);
+                    $this->setFileError($e , $name , $rule->max);
                 }
                 continue;
             }
 
             //Checks if data is present and required
-            if (empty($this->formData[$name])  && $rule->isRequired && $this->formData[$name]!=0) {
-                $this->setError("required", $name);
+            if (empty($this->formData[$name]) && $rule->isRequired) {
+                $this->setError("required" , $name);
                 continue;
             }
 
@@ -158,35 +137,39 @@ class FormValidator
             $this->formData[$name] = $this->sanitize($this->formData[$name]);
 
             //Checks DataType
-            $this->formData[$name] = filter_var($this->formData[$name],
+            $this->formData[$name] = filter_var($this->formData[$name] ,
                 $this->getFilter($rule->type));
 
             $data = $this->formData[$name];
 
-            if (empty($this->formData[$name]) && $rule->isRequired && $data !== 0) {
-                $this->setError("input", $name);
+            if (!$this->formData[$name] && $rule->isRequired) {
+                $this->setError("input" , $name);
                 continue;
             }
 
             //Validates if it is date
-            if ($rule->type === "date" && !$this->validateDate($rule, $data)) {
-                $this->setError("input", $name);
-                continue;
+            if ($rule->type === "date") {
+                $date = $this->validateDate($rule , $data);
+                if (!$date) {
+                    $this->setError("input" , $name);
+                    continue;
+                }
+                $this->formData[$name] = $date;
             }
 
             if (!empty($rule->inList)) {
-                if (!in_array($this->formData[$name], $rule->inList)) {
-                    $this->setError("input", $name, clear: true);
+                if (!in_array($this->formData[$name] , $rule->inList)) {
+                    $this->setError("input" , $name , clear: true);
                     continue;
                 }
             } else {
-                if (!$this->validateLength($rule, $data)) {
-                    $this->setError("length", $name, rule: $rule);
+                if (!$this->validateLength($rule , $data)) {
+                    $this->setError("length" , $name , rule: $rule);
                     continue;
                 }
 
-                if ($rule->type === 'string' && !$this->validatePattern($rule, $data)) {
-                    $this->setError("input", $name);
+                if ($rule->type === 'string' && !$this->validatePattern($rule , $data)) {
+                    $this->setError("input" , $name);
                     continue;
                 }
             }
@@ -205,7 +188,7 @@ class FormValidator
         $this->isValid = $this->isValid & false;
     }
 
-    function validateFile(string $name, $rule): int
+    function validateFile(string $name , $rule): int
     {
         if (!isset($this->files)) return UPLOAD_ERR_NO_FILE;
         if (empty($this->files[$name]))
@@ -222,14 +205,14 @@ class FormValidator
         $size = filesize($this->files[$name]["tmp_name"]);
         if (!empty($rule->max) && $size > $rule->max) return UPLOAD_ERR_INI_SIZE;
 
-        $file = move_uploaded_image_file($this->files[$name]["tmp_name"], __DIR__ . "/uploads");
+        $file = move_uploaded_image_file($this->files[$name]["tmp_name"] , $_SERVER["DOCUMENT_ROOT"] . "/uploads");
         if (!$file) return UPLOAD_ERR_CANT_WRITE;
 
         $this->formData['profile'] = $file;
         return UPLOAD_ERR_OK;
     }
 
-    private function setFileError(int $e, string $name, $max = null): void
+    private function setFileError(int $e , string $name , $max = null): void
     {
         $this->setInvalid();
         switch ($e) {
@@ -240,7 +223,7 @@ class FormValidator
             }
             case UPLOAD_ERR_INI_SIZE :
             {
-                if(empty($max)) $max = ini_get("upload_max_filesize");
+                if (empty($max)) $max = ini_get("upload_max_filesize");
                 $this->errors[$name] = "Maximum file Upload Size reached ( > ${max} bytes)";
                 break;
             }

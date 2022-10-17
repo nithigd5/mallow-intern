@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /**
  * @param $file - file to convert
@@ -8,10 +8,10 @@ function fileToUrl($file): string
 {
     if (!file_exists($file)) return false;
 
-    $file = str_replace("/", "\\", $file);
-    $dir = str_replace("/", "\\", $_SERVER["DOCUMENT_ROOT"]);
+    $file = str_replace("/" , "\\" , $file);
+    $dir = str_replace("/" , "\\" , $_SERVER["DOCUMENT_ROOT"]);
 
-    return str_replace($dir, "", $file);
+    return str_replace($dir , "" , $file);
 }
 
 
@@ -24,22 +24,24 @@ function fileToUrl($file): string
  * Moves uploaded source image to given destination, if it cannot be moved, it returns false.
  * Source should be valid Image.
  */
-function move_uploaded_image_file(string $source, string $destination, array $format =
-                        array('jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif',)): bool|string
+function move_uploaded_image_file(
+    string $source ,
+    string $destination ,
+    array  $format = array('jpg' => 'image/jpeg' , 'png' => 'image/png' , 'gif' => 'image/gif' ,)
+): bool|string
 {
     $fInfo = new finfo(FILEINFO_MIME_TYPE);
 
-    $ext = array_search($fInfo->file($source), $format, true);
+    $ext = array_search($fInfo->file($source) , $format , true);
 
     if (!$ext) return false;
 
     $hash = sha1_file($source);
-//    $hash = hash_file("md5", $source);
-    $image_dest = sprintf("%s/img_%s.%s", $destination, $hash, $ext);
+    $image_dest = sprintf("%s/img_%s.%s" , $destination , $hash , $ext);
 
     if (file_exists($image_dest)) return $image_dest;
 
-    if (move_uploaded_file($source, $image_dest)) {
+    if (move_uploaded_file($source , $image_dest)) {
         return $image_dest;
     } else return false;
 }

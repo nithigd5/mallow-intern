@@ -5,7 +5,7 @@ $errors = [];
 $form = FormValidator::class;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require_once "surveypost.php";
+    require_once "survey-post.php";
     if ($form->isValid) {
         require_once "formResult.php";
         exit;
@@ -55,13 +55,28 @@ function getValue($name)
 <div class="container">
     <h2 class="title">Register Form</h2>
     <form action="Register.php" id="register-form" class="form" method="post" enctype="multipart/form-data">
-        <div class="form-field">
-            <label class="input-title" for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Name" class="form-input" Minlength="3" Maxlength="100"
-                   value="<?= getValue("name"); ?>"
-                   required>
-            <label class="error"><?= getError("name"); ?></label>
-        </div>
+
+        <fieldset class="form-group">
+            <div class="form-field">
+                <label class="input-title" for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Name" class="form-input" Minlength="3"
+                       Maxlength="100"
+                       value="<?= getValue("name"); ?>"
+                       required>
+                <label class="error"><?= getError("name"); ?></label>
+            </div>
+
+            <div class="form-field <?= getError("gender") ? "error" : "" ?>">
+                <label class="input-title" for="gender">Gender </label>
+                <select class="form-input" name="gender" id="gender" required>
+                    <option selected disabled>Select your Gender</option>
+                    <option value="male" <?= getValue("gender") == "male" ? "selected" : "" ?>>Male</option>
+                    <option value="female" <?= getValue("gender") == "female" ? "selected" : "" ?>>Female</option>
+                    <option value="secret" <?= getValue("gender") == "secret" ? "selected" : "" ?>>Secret</option>
+                </select>
+                <label class="error"><?= getError("gender") ?: "" ?></label>
+            </div>
+        </fieldset>
 
         <fieldset class="form-group">
             <div class="form-field">
@@ -73,7 +88,8 @@ function getValue($name)
             </div>
             <div class="form-field">
                 <label class="input-title" for="dob">Date Of Birth</label>
-                <input type="date" name="dob" id="dob" class="form-input" value="<?= getValue("dob"); ?>" required>
+                <input type="date" name="dob" id="dob" class="form-input"
+                       value="<?= getValue("dob") ? getValue("dob")->format('Y-m-d') : ''; ?>" required>
                 <label class="error"><?= getError("dob"); ?></label>
             </div>
         </fieldset>
