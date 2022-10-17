@@ -38,7 +38,7 @@ FROM products
 WHERE id = 2;
 
 SELECT *
-FROM products;
+FROM products ORDER BY id DESC;
 
 SELECT *
 FROM products
