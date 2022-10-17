@@ -51,10 +51,4 @@ abstract class Entity
         $stmt->setFetchMode(PDO::FETCH_CLASS , static::TYPE);
         return $stmt->fetchAll();
     }
-
-//    abstract function insert(mixed $data);
-//    abstract function insertAll(mixed $data);
-//    abstract function update(mixed $data);
-//    abstract function updateAll(mixed $data);
-
 }

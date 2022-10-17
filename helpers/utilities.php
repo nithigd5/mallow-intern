@@ -37,7 +37,6 @@ function move_uploaded_image_file(
     if (!$ext) return false;
 
     $hash = sha1_file($source);
-//    $hash = hash_file("md5", $source);
     $image_dest = sprintf("%s/img_%s.%s" , $destination , $hash , $ext);
 
     if (file_exists($image_dest)) return $image_dest;

@@ -1,8 +1,4 @@
 <?php
-//if (empty($form)) {
-//    http_response_code(403);
-//    die("Don't Call this script.");
-//}
 require_once "Database/students/Database.php";
 require_once "Database/students/MarksEntity.php";
 require_once "Database/students/UserEntity.php";
