@@ -69,7 +69,7 @@
             <fieldset class="form-group">
                 <div class="form-field form-image">
                     <label class="input-title" for="profile">
-                        <img src="{{Vite::asset('resources/images/character_icons_4.png')}}"
+                        <img src='/images/character_icons_4.png'
                              alt="Your Profile Picture here" class="img"
                              id="profile-preview">
                     </label>
