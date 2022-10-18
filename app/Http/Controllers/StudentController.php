@@ -29,7 +29,7 @@ class StudentController extends Controller
             'mobile' => $request->mobile,
             'dob' => $request->dob,
             'address' => $request->address,
-            'gender' => $request->gender,
+            'gender' => $request->gender == 'secret' ? null : $request->gender,
             'profile' => $profile,
             'created_at' => now(),
             'updated_at' => now()
