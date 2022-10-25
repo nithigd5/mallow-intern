@@ -57,20 +57,20 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($students as $student)
+            @foreach ($marks as $mark)
                 @php
-                    $average = $student->marks[0]->mark1 + $student->marks[0]->mark2 + $student->marks[0]->mark3 + $student->marks[0]->mark4 + $student->marks[0]->mark5;
+                    $average = $mark->mark1 + $mark->mark2 + $mark->mark3 + $mark->mark4 + $mark->mark5;
                     $percentage = ($average / 500) * 100;
                     $average /= 5;
                 @endphp
                 <tr>
-                    <td>{{$student->marks[0]->student_id}}</td>
-                    <td>{{$student->marks[0]->id}}</td>
-                    <td>{{$student->marks[0]->mark1}}</td>
-                    <td>{{$student->marks[0]->mark2}}</td>
-                    <td>{{$student->marks[0]->mark3}}</td>
-                    <td>{{$student->marks[0]->mark4}}</td>
-                    <td>{{$student->marks[0]->mark5}}</td>
+                    <td>{{$mark->student_id}}</td>
+                    <td>{{$mark->id}}</td>
+                    <td>{{$mark->mark1}}</td>
+                    <td>{{$mark->mark2}}</td>
+                    <td>{{$mark->mark3}}</td>
+                    <td>{{$mark->mark4}}</td>
+                    <td>{{$mark->mark5}}</td>
                     <td>{{$average}}</td>
                     <td>{{$percentage}}%</td>
                 </tr>

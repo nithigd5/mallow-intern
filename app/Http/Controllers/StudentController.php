@@ -12,7 +12,8 @@ class StudentController extends Controller
     public function index()
     {
         return view('students' , [
-            'students' => Student::with('marks')->get()
+            'students' => Student::all(),
+            'marks' => Mark::all()
         ]);
     }
 
