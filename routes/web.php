@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/' , function () {
-    return view('register');
-});
+Route::get('/' , [StudentController::class , 'create']);
 
-Route::post('/register' , [StudentController::class , 'create']);
+Route::post('/register' , [StudentController::class , 'store']);
 
 Route::get('/students' , [StudentController::class , 'index'])
     ->name('students');
