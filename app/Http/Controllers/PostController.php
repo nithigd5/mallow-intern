@@ -54,6 +54,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+
         return view('posts.show', ['post' => $post]);
     }
 
@@ -65,6 +66,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(Auth::user()->id !== $post->user->id) abort(403);
+
         return view('posts.edit', ['post' => $post]);
     }
 
@@ -77,6 +80,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request , Post $post)
     {
+        if(Auth::user()->id !== $post->user->id) abort(403);
+
         $post->title = $request->title;
         $post->content = $request->input('content');
         $post->save();
@@ -91,6 +96,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(Auth::user()->id !== $post->user->id) abort(403);
+
         $post->deleteOrFail();
         return redirect('/dashboard/posts');
     }
