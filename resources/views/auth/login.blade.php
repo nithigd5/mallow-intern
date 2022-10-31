@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <title>Login User</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -73,7 +73,7 @@
                                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                                             <input type="text" name="email"
                                                    class="form-control @error('email') is-invalid @enderror"
-                                                   id="yourUsername"
+                                                   id="yourUsername" value="{{ old('email') }}"
                                                    required>
 
                                             <div class="invalid-feedback">@error('email'){{ $message }}@enderror</div>
