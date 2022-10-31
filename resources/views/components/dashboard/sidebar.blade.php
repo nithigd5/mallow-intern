@@ -16,12 +16,12 @@
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ route('posts.index') }}">
-                        <i class="bi bi-circle"></i><span>View All</span>
+                        <i class="bi bi-circle"></i><span>View All Posts</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('posts.create') }}">
-                        <i class="bi bi-circle"></i><span>Create</span>
+                        <i class="bi bi-circle"></i><span>Create a Post</span>
                     </a>
                 </li>
 
