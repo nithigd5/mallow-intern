@@ -8,19 +8,19 @@
     <div class="container text-center">
 
         <div class="row p-2 fs-6 align-items-center fw-semibold fs-5 bg-primary text-white rounded-3 shadow-md mb-3">
-            <div class="col-2">Title</div>
-            <div class="col-1">Created</div>
-            <div class="col-1">Updated</div>
-            <div class="col-5">Content</div>
-            <div class="col-3">Action</div>
+            <div class="col-3 col-md-2">Title</div>
+            <div class="col-3 col-md-1">Created</div>
+            <div class="col-3 col-md-1">Updated</div>
+            <div class="col-md-5 d-none d-md-block">Content</div>
+            <div class="col-3 col-md-3">Action</div>
         </div>
         @foreach($posts as $post)
             <div class="row p-2 fs-6 align-items-center fw-semibold rounded-3 bg-white shadow my-2">
-                <div class="col-2"> {{ $post->title  }} </div>
-                <div class="col-1"> {{ $post->created_at->diffForHumans()  }} </div>
-                <div class="col-1"> {{ $post->updated_at->diffForHumans()  }} </div>
-                <p class="col-5 font-monospace">{{ $post->content }}</p>
-                <div class="col-3 d-flex flex-column  flex-xl-row  gap-2 align-content-center justify-content-center">
+                <div class="col-3 col-md-2"> {{ $post->title  }} </div>
+                <div class="col-3 col-md-1"> {{ $post->created_at->diffForHumans()  }} </div>
+                <div class="col-3 col-md-1"> {{ $post->updated_at->diffForHumans()  }} </div>
+                <p class="font-monospace col-md-5 d-none d-md-block">{{ $post->content }}</p>
+                <div class="col-3 col-md-3 d-flex flex-column  flex-xl-row  gap-2 align-content-center justify-content-center">
                     <a class="col btn btn-primary" href="{{ route('posts.show', $post->id) }}"> View
                     </a>
                     <a class="col btn btn-secondary" href="{{ route('posts.edit', $post->id) }}"> Edit
