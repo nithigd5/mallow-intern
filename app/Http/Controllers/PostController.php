@@ -41,8 +41,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->input('content');
-        $post->user_id = Auth::user()->id;
-        $post->saveOrFail();
+        Auth::user()->posts()->save($post);
         return redirect('/dashboard/posts');
     }
 
