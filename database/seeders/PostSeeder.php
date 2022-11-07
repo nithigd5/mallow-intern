@@ -21,7 +21,7 @@ class PostSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'Surya' ,
-            'email' => 'surya@@example.com'
+            'email' => 'surya@example.com'
         ]);
 
         Post::factory(8)->create();

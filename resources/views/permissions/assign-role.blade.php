@@ -14,9 +14,13 @@
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Users</label>
                         <div class="col-sm-10">
-                            <select name="form_user" class="form-select @error('form_user') is-invalid @enderror" aria-label="Default select example">
+                            <select name="form_user" class="form-select @error('form_user') is-invalid @enderror"
+                                    aria-label="Default select example">
                                 <option selected="" disabled>Users</option>
                                 @foreach($users as $user)
+                                    @if($user->hasRole('superAdmin'))
+                                        @continue
+                                    @endif
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>

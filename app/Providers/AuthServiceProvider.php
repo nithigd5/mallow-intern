@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('assign-role' , function (User $user , $role , $assignedUser = null) {
-            if($assignedUser === null){
+            if ($assignedUser === null) {
                 return $role !== 'superAdmin' && $user->hasRole('admin');
             }
             return !$assignedUser->hasRole('superAdmin') && $role !== 'superAdmin' && $user->hasRole('admin');
