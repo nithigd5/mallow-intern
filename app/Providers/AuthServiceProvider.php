@@ -9,6 +9,7 @@ use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -34,8 +35,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('superAdmin') ? true : null;
         });
 
-        Gate::define('assign-role', function (User $user) {
-            return $user->hasRole('admin')
+        Gate::define('assign-role', function (User $user, $role) {
+                return  $role !== 'superAdmin' && $user->hasRole('admin')
                 ? Response::allow()
                 : Response::denyWithStatus(404);
         });

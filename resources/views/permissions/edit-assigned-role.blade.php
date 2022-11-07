@@ -1,33 +1,16 @@
-@props(['permissions'])
-
 @extends('layouts.dashboard')
 
-@section('title', 'Assign Roles')
+@section('title', 'Edit Roles')
 
 @section('content')
     <div class="row justify-content-center">
         <div class="card col-md-8">
-            <div class="card-header">Assign Your Roles Here</div>
+            <div class="card-header">Edit Your Roles Here</div>
             <div class="card-body">
-                <form action="/dashboard/roles/assign" class="row needs-validation pt-4" method="post" novalidate>
+                <form action="/dashboard/roles/assign/{{ $user->id }}}" class="row needs-validation pt-4" method="post" novalidate>
                     @csrf
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">Users</label>
-                        <div class="col-sm-10">
-                            <select name="user" class="form-select @error('user') is-invalid @enderror" aria-label="Default select example">
-                                <option selected="" disabled>Users</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">
-                                @error('user')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
+                    @method('PUT')
+                    <h3>User: {{ $user->name }}</h3>
                     <div class="row mb-3">
                         <legend class="col-form-label col-sm-2 pt-0">Roles</legend>
                         <div class="col-sm-10">

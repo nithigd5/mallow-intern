@@ -2,7 +2,7 @@
 
 @extends('layouts.dashboard')
 
-@section('title', 'Create Roles')
+@section('title', 'Edit Roles')
 
 @section('content')
     <div class="row justify-content-center">

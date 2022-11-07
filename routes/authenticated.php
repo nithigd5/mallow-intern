@@ -16,8 +16,13 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('/dashboard/roles/create', [PermissionController::class, 'createRole']);
         Route::post('/dashboard/roles', [PermissionController::class, 'storeRole']);
         Route::get('/dashboard/roles/users', [PermissionController::class, 'viewAllUserRoles']);
+
         Route::get('/dashboard/roles/assign', [PermissionController::class, 'assignRole']);
-        Route::put('/dashboard/roles/assign', [PermissionController::class, 'storeAssignRole']);
+        Route::post('/dashboard/roles/assign', [PermissionController::class, 'storeAssignRole']);
+
+        Route::put('/dashboard/roles/assign/{user}', [PermissionController::class, 'updateAssignRole']);
+        Route::get('/dashboard/roles/assign/{user}/edit', [PermissionController::class, 'editAssignRole']);
+
         Route::delete('/dashboard/roles/{role:name}/users/{user}', [PermissionController::class, 'revokeRole'])
         ->name('roles.revoke');
         Route::put('/dashboard/roles/{role}', [PermissionController::class, 'updateRole']);
