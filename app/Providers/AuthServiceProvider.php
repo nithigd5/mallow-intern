@@ -43,6 +43,10 @@ class AuthServiceProvider extends ServiceProvider
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
+        Gate::define('delete-role', function (User $user, $role) {
+            return $role !== 'superAdmin' && $user->hasRole('admin');
+        });
+
         Gate::define('revoke-role', function (User $user, $role) {
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });

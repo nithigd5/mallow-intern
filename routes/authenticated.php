@@ -24,9 +24,10 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::put('/dashboard/roles/assign/{user}', [PermissionController::class, 'updateAssignRole']);
         Route::get('/dashboard/roles/assign/{user}/edit', [PermissionController::class, 'editAssignRole']);
 
-        Route::delete('/dashboard/roles/{role:name}/users/{user}', [PermissionController::class, 'revokeRole'])
-        ->name('roles.revoke');
+        Route::delete('/dashboard/roles/{role}', [PermissionController::class, 'deleteRole']);
+
         Route::put('/dashboard/roles/{role}', [PermissionController::class, 'updateRole']);
         Route::get('/dashboard/roles/{role}/edit', [PermissionController::class, 'editRole']);
+
     });
 });

@@ -125,10 +125,13 @@ class PermissionController extends Controller
         return redirect('/dashboard/roles');
     }
 
-    function revokeRole(User $user , Role $role)
+
+    function deleteRole(Role $role)
     {
-        Gate::authorize('revoke-role' , [$role->name]);
-        $user->removeRole($role);
-        return redirect('/dashboard/roles/users');
+        Gate::authorize('delete-role' , [$role->name]);
+        if($role->name ===  'superAdmin') abort(400, 'Please dont delete a Super Admin');
+
+        $role->deleteOrFail();
+        return redirect('/dashboard/roles');
     }
 }
