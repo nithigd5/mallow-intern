@@ -18,7 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('viewAnyPost');
     }
 
     /**

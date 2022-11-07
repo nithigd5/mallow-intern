@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -100,6 +101,10 @@ class PermissionController extends Controller
     {
         Gate::authorize('create-role' , [$request->role]);
 
+        $request->validate([
+            'role' => 'required|unique:roles,name'
+        ]);
+
         $role = Role::findOrCreate($request->role);
         foreach (Permission::all() as $permission) {
             if ($request->input($permission->name) === 'on') {
@@ -112,6 +117,11 @@ class PermissionController extends Controller
     function updateRole(Role $role , Request $request)
     {
         Gate::authorize('edit-role' , [$request->role]);
+
+        $request->validate([
+            'role' => ['required' , Rule::unique('roles' , 'name')->ignore($role->id)]
+        ]);
+
         $role->name = $request->role;
         $role->save();
 
@@ -129,7 +139,7 @@ class PermissionController extends Controller
     function deleteRole(Role $role)
     {
         Gate::authorize('delete-role' , [$role->name]);
-        if($role->name ===  'superAdmin') abort(400, 'Please dont delete a Super Admin');
+        if ($role->name === 'superAdmin') abort(400 , 'Please dont delete a Super Admin');
 
         $role->deleteOrFail();
         return redirect('/dashboard/roles');

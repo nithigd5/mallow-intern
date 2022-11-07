@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'updatePost']);
         Permission::create(['name' => 'deletePost']);
         Permission::create(['name' => 'viewPost']);
+        Permission::create(['name' => 'viewAnyPost']);
         Permission::create(['name' => 'viewProfile']);
         Permission::create(['name' => 'updateProfile']);
 
