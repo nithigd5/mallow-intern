@@ -32,6 +32,9 @@
                         <legend class="col-form-label col-sm-2 pt-0">Roles</legend>
                         <div class="col-sm-10">
                             @foreach($roles as $role)
+                                @if($role->name === 'superAdmin')
+                                    @continue
+                                @endif
                                 <div class="form-check">
                                     <input class="form-check-input" name="{{ $role->name }}" type="checkbox"
                                            id="{{ $role->name }}">

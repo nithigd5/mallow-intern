@@ -20,8 +20,10 @@
                     @endforeach </div>
                 <div
                     class="col-4 col-md-4 d-flex flex-column  flex-xl-row  gap-2 align-content-center justify-content-center">
-                    <a class="col btn btn-secondary" href="/dashboard/roles/assign/{{$user->id}}/edit"> Edit
-                    </a>
+                    @if(!$user->hasRole('superAdmin'))
+                        <a class="col btn btn-secondary" href="/dashboard/roles/assign/{{$user->id}}/edit"> Edit
+                        </a>
+                    @endif
                 </div>
             </div>
         @endforeach

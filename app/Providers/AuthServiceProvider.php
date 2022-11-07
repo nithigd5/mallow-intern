@@ -7,9 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
-use Spatie\Permission\Models\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Post::class => PostPolicy::class,
+        Post::class => PostPolicy::class ,
     ];
 
     /**
@@ -31,35 +29,38 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
+        Gate::before(function (User $user , $ability) {
             return $user->hasRole('superAdmin') ? true : null;
         });
 
-        Gate::define('assign-role', function (User $user, $role) {
-                return  $role !== 'superAdmin' && $user->hasRole('admin');
+        Gate::define('assign-role' , function (User $user , $role , $assignedUser = null) {
+            if($assignedUser === null){
+                return $role !== 'superAdmin' && $user->hasRole('admin');
+            }
+            return !$assignedUser->hasRole('superAdmin') && $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('create-role', function (User $user, $role) {
+        Gate::define('create-role' , function (User $user , $role) {
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('delete-role', function (User $user, $role) {
+        Gate::define('delete-role' , function (User $user , $role) {
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('revoke-role', function (User $user, $role) {
+        Gate::define('revoke-role' , function (User $user , $role) {
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('edit-role', function (User $user, $role) {
+        Gate::define('edit-role' , function (User $user , $role) {
             return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('view-roles', function (User $user) {
+        Gate::define('view-roles' , function (User $user) {
             return $user->hasRole('admin');
         });
 
-        Gate::define('view-user-roles', function (User $user) {
+        Gate::define('view-user-roles' , function (User $user) {
             return $user->hasRole('admin');
         });
     }

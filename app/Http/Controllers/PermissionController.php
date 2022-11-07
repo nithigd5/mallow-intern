@@ -74,8 +74,8 @@ class PermissionController extends Controller
 
     function editAssignRole(User $user)
     {
-        Gate::authorize('assign-role' , ['']);
-
+        Gate::authorize('assign-role' , ['', $user]);
+        if($user->hasRole('superAdmin')) abort(400, "You cannot assign yourself other roles as you have all permissions");
         $roles = Role::all();
 
         return view('permissions.edit-assigned-role' , ['user' => $user , 'roles' => $roles]);
@@ -83,7 +83,9 @@ class PermissionController extends Controller
 
     function updateAssignRole(User $user , Request $request)
     {
-        Gate::authorize('assign-role' , [$request->input('superAdmin') === 'on' ? 'superAdmin' : '']);
+        Gate::authorize('assign-role' , [$request->input('superAdmin') === 'on' ? 'superAdmin' : '', $user]);
+
+        if($user->hasRole('superAdmin')) abort(400, "You cannot assign yourself other roles as you have all permissions");
 
         foreach (Role::all() as $role) {
             if ($request->input($role->name) === 'on') {
