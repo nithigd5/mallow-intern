@@ -15,6 +15,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
         Route::get('/dashboard/roles', [PermissionController::class, 'viewAllRoles']);
         Route::get('/dashboard/roles/create', [PermissionController::class, 'createRole']);
         Route::post('/dashboard/roles', [PermissionController::class, 'storeRole']);
+
         Route::get('/dashboard/roles/users', [PermissionController::class, 'viewAllUserRoles']);
 
         Route::get('/dashboard/roles/assign', [PermissionController::class, 'assignRole']);

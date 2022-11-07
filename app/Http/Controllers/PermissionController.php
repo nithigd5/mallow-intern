@@ -13,7 +13,8 @@ class PermissionController extends Controller
 
     function createRole()
     {
-        Gate::authorize('create-role');
+        Gate::authorize('create-role' , ['']);
+
         $permissions = \Spatie\Permission\Models\Permission::all();
         return view('permissions.create-role' , ['permissions' => $permissions]);
     }
@@ -97,11 +98,8 @@ class PermissionController extends Controller
 
     function storeRole(Request $request)
     {
-        Gate::authorize('assign-role' , ['']);
+        Gate::authorize('create-role' , [$request->role]);
 
-//        $request->validate([
-//            'role' => 'required|string|unique:roles,name',
-//        ]);
         $role = Role::findOrCreate($request->role);
         foreach (Permission::all() as $permission) {
             if ($request->input($permission->name) === 'on') {
@@ -113,13 +111,10 @@ class PermissionController extends Controller
 
     function updateRole(Role $role , Request $request)
     {
+        Gate::authorize('edit-role' , [$request->role]);
+        $role->name = $request->role;
+        $role->save();
 
-        Gate::authorize('edit-role' , [$role->name]);
-
-//        $request->validate([
-//            'role' => 'required|string|unique:roles,name',
-//        ]);
-        $role = Role::findOrCreate($request->role);
         foreach (Permission::all() as $permission) {
             if ($request->input($permission->name) === 'on') {
                 $role->givePermissionTo($permission);

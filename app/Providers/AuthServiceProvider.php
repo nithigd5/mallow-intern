@@ -39,8 +39,8 @@ class AuthServiceProvider extends ServiceProvider
                 return  $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
-        Gate::define('create-role', function (User $user) {
-            return $user->hasRole('admin');
+        Gate::define('create-role', function (User $user, $role) {
+            return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
         Gate::define('revoke-role', function (User $user, $role) {
