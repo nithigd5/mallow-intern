@@ -34,5 +34,9 @@ class DatabaseSeeder extends Seeder
         $role->syncPermissions(['createPost' , 'updatePost' , 'deletePost' , 'viewPost' , 'viewProfile' , 'updateProfile']);
 
         $user = User::find(1)->assignRole('superAdmin');
+
+        foreach (User::all() as $user){
+            $user->assignRole('creator');
+        }
     }
 }

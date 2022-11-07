@@ -36,39 +36,27 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('assign-role', function (User $user, $role) {
-                return  $role !== 'superAdmin' && $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+                return  $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
         Gate::define('create-role', function (User $user) {
-            return $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+            return $user->hasRole('admin');
         });
 
         Gate::define('revoke-role', function (User $user, $role) {
-            return $role !== 'superAdmin' && $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+            return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
         Gate::define('edit-role', function (User $user, $role) {
-            return $role !== 'superAdmin' && $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+            return $role !== 'superAdmin' && $user->hasRole('admin');
         });
 
         Gate::define('view-roles', function (User $user) {
-            return $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+            return $user->hasRole('admin');
         });
 
         Gate::define('view-user-roles', function (User $user) {
-            return $user->hasRole('admin')
-                ? Response::allow()
-                : Response::denyWithStatus(404);
+            return $user->hasRole('admin');
         });
     }
 }
