@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class , 'post');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +59,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
 
-        return view('posts.show', ['post' => $post]);
+        return view('posts.show' , ['post' => $post]);
     }
 
     /**
@@ -65,9 +70,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if(Auth::user()->id !== $post->user->id) abort(403);
+        if (Auth::user()->id !== $post->user->id) abort(403);
 
-        return view('posts.edit', ['post' => $post]);
+        return view('posts.edit' , ['post' => $post]);
     }
 
     /**
@@ -79,7 +84,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request , Post $post)
     {
-        if(Auth::user()->id !== $post->user->id) abort(403);
+        if (Auth::user()->id !== $post->user->id) abort(403);
 
         $post->title = $request->title;
         $post->content = $request->input('content');
@@ -95,7 +100,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(Auth::user()->id !== $post->user->id) abort(403);
+        if (Auth::user()->id !== $post->user->id) abort(403);
 
         $post->deleteOrFail();
         return redirect('/dashboard/posts');

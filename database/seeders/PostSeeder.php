@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
-use Database\Factories\PostFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
@@ -16,9 +15,22 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Nithi' ,
+            'email' => 'nithi@example.com'
+        ]);
+        User::factory()->create([
+            'name' => 'Surya' ,
+            'email' => 'surya@@example.com'
+        ]);
+
+        Post::factory(8)->create();
         Post::factory(10)->create([
             'user_id' => 1
         ]);
+        Post::factory(10)->create([
+            'user_id' => 2
+        ]);
+
     }
 }
