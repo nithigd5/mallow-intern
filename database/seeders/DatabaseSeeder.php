@@ -31,13 +31,13 @@ class DatabaseSeeder extends Seeder
 
         $role = Role::create(['name' => 'superAdmin']);
         $role = Role::create(['name' => 'admin']);
-        $role = Role::create(['name' => 'creator']);
-        $role->syncPermissions(['createPost' , 'updatePost' , 'deletePost' , 'viewPost' , 'viewProfile' , 'updateProfile']);
+        $role = Role::create(['name' => 'user']);
+        $role->syncPermissions(['createPost' , 'updatePost' , 'viewAnyPost' , 'deletePost' , 'viewPost' , 'viewProfile' , 'updateProfile']);
 
         $user = User::find(1)->assignRole('superAdmin');
 
-        foreach (User::all() as $user){
-            $user->assignRole('creator');
+        foreach (User::all() as $user) {
+            $user->assignRole('user');
         }
     }
 }

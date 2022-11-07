@@ -56,10 +56,10 @@ class PermissionController extends Controller
     {
         Gate::authorize('assign-role' , [$request->input('superAdmin') === 'on' ? 'superAdmin' : '']);
         $request->validate([
-            'user' => 'required' ,
+            'form_user' => 'required|int' ,
         ]);
 
-        $user = User::findOrFail($request->user);
+        $user = User::findOrFail($request->form_user);
 
         foreach (Role::all() as $role) {
             if ($request->input($role->name) === 'on') {
