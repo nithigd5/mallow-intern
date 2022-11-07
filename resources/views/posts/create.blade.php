@@ -8,41 +8,42 @@
     <div class="row justify-content-center">
         <div class="card col-md-8">
             <div class="card-header">Create Your Post Here</div>
-            <div class="card-body">
-                <form action="/dashboard/posts/" id="createPost" class="row needs-validation pt-4" method="post"
-                      novalidate>
-                    @csrf
-                    <div class="row mb-3">
-                        <label for="title" class="col-sm-2 col-form-label">Title</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                                   value="{{ old('title') }}" id="title" required>
-                            <div class="invalid-feedback">
-                                @error('title')
-                                {{ $message }}
-                                @enderror
-                            </div>
+            <p class="card-body">
+            <form action="/dashboard/posts/" id="createPost" class="row pt-4" method="post"
+                  novalidate>
+                @csrf
+                <div class="row mb-3">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                               value="{{ old('title') }}" id="title" required>
+                        <div class="invalid-feedback">
+                            @error('title')
+                            {{ $message }}
+                            @enderror
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="content" class="col-sm-2 col-form-label">Post Content</label>
-                        <div class="col-sm-10">
+                </div>
+                <div class="row mb-3">
+                    <label for="content" class="col-sm-2 col-form-label">Post Content</label>
+                    <div class="col-sm-10">
                     <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content"
                               style="height: 100px" required>{{ old('content') }}</textarea>
-                            <div class="invalid-feedback">
-                                @error('content')
-                                {{ $message }}
-                                @enderror
-                            </div>
+                        <div class="invalid-feedback">
+                            @error('content')
+                            {{ $message }}
+                            @enderror
                         </div>
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <p id='success' class="text-success"></p>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
         </div>
+    </div>
     </div>
     <script>
         function convertFormToJSON(form) {
@@ -59,29 +60,34 @@
             const form = $(e.target);
             const data = convertFormToJSON(form);
             console.log(data);
-            submit(form)
+            submit(form, data)
         });
 
-        function submit(form){
+        function submit(form, postData) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $.post(form.attr('action'), function (data) {
-                console.log(data);
-            }).fail(function(data) {
+            $.post(form.attr('action'),postData, function (data) {
+                $('#title').removeClass('is-invalid');
+                $('#content').removeClass('is-invalid');
+                $('#title').addClass('is-valid');
+                $('#content').addClass('is-valid');
+                $("#success").text("Successfully Created")
+                $("#title").val('');
+                $("#content").val('');
+            }).fail(function (data) {
                 let errors = data.responseJSON.errors
-                if(errors.title){
+                if (errors.title) {
                     $("#title").next('.invalid-feedback').text(errors.title);
                     $('#title').addClass('is-invalid');
-
                 }
-                if(errors.content){
+                if (errors.content) {
                     $("#content").next('.invalid-feedback').text(errors.content);
                     $('#content').addClass('is-invalid');
                 }
-                console.log( data );
+                console.log(data);
             })
         }
     </script>
